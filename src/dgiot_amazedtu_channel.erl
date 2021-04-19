@@ -33,7 +33,7 @@
 %% Channel callback
 -export([init/3, handle_init/1, handle_event/3, handle_message/2, stop/3]).
 %% TCP callback
--export([init/1, handle_info/2, handle_cast/2, handle_call/3, terminate/2, code_change/3]).
+-export([init/1, handle_info/2, handle_cast/2, handle_call/3, code_change/3]).
 
 
 %% 注册通道类型
@@ -144,7 +144,7 @@ handle_info({tcp, Buff}, #tcp{socket = Socket, state = #state{id = ChannelId, de
 
                 {ProductId, DeviceId} = dgiot_amazedtu:get_objectid(Name, ChannelId, DevAddr1),
 
-                dgiot_amazedtu:create_device(DeviceId, Name, DtuAddr, DTUIP),
+                dgiot_amazedtu:create_device(DeviceId, Name, DevAddr1, DTUIP),
                 {DevAddr1, ProductId};
             _ ->
                 {<<>>, <<>>}
@@ -152,7 +152,7 @@ handle_info({tcp, Buff}, #tcp{socket = Socket, state = #state{id = ChannelId, de
     {noreply, TCPState#tcp{state = State#state{productid = ProductId1, devaddr = DtuAddr}}};
 
 %% 指令返回报文
-handle_info({tcp, Buff}, #tcp{state = #state{id = ChannelId, devaddr = DevAddr, productid = ProductId} = State} = TCPState) ->
+handle_info({tcp, Buff}, #tcp{state = #state{id = ChannelId, devaddr = DevAddr, productid = ProductId}} = TCPState) ->
     shuwa_bridge:send_log(ChannelId, "Amaziot revice from  ~p", [shuwa_utils:binary_to_hex(Buff)]),
     <<SlaveId:8, _FunCode:8, Len:8, ResponseData/binary>> = Buff,
     case SlaveId of
@@ -211,6 +211,3 @@ handle_cast(_Msg, TCPState) ->
 code_change(_OldVsn, TCPState, _Extra) ->
     {ok, TCPState}.
 
-getTime() ->%1907181316
-    <<_:2/bytes, DateTime/binary>> = shuwa_datetime:format("YYMMDDHHNN"),
-    DateTime.
