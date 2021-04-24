@@ -13,6 +13,7 @@
 %% See the License for the specific language governing permissions and
 %% limitations under the License.
 %%--------------------------------------------------------------------
+
 -module(dgiot_amazedtu_channel).
 -behavior(shuwa_channelx).
 -author("johnliu").

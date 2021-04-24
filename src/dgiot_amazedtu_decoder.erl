@@ -1,4 +1,5 @@
 %%--------------------------------------------------------------------
+%%--------------------------------------------------------------------
 %% Copyright (c) 2020 DGIOT Technologies Co., Ltd. All Rights Reserved.
 %%
 %% Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,6 +14,7 @@
 %% See the License for the specific language governing permissions and
 %% limitations under the License.
 %%--------------------------------------------------------------------
+
 -module(dgiot_amazedtu_decoder).
 -include("dgiot_amazedtu.hrl").
 -author("johnliu").
