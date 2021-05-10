@@ -144,12 +144,13 @@ handle_info({tcp, Buff}, #tcp{socket = Socket, state = #state{id = ChannelId, de
             {_Buff1, [#{<<"name">> := Name, <<"hardware_number">> := DevAddr1} | _]} when DevAddr1 =/= <<>> ->
 
                 {ProductId, DeviceId} = dgiot_amazedtu:get_objectid(Name, ChannelId, DevAddr1),
-
+                shuwa_mqtt:subscribe(<<"thing/", ProductId/binary, "/", DevAddr1/binary>>),
                 dgiot_amazedtu:create_device(DeviceId, Name, DevAddr1, DTUIP),
                 {DevAddr1, ProductId};
             _ ->
                 {<<>>, <<>>}
         end,
+    erlang:send_after(1000, self(), temperature),
     {noreply, TCPState#tcp{state = State#state{productid = ProductId1, devaddr = DtuAddr}}};
 
 %% 指令返回报文
@@ -174,10 +175,10 @@ handle_info({tcp, Buff}, #tcp{state = #state{id = ChannelId, devaddr = DevAddr, 
             {noreply, TCPState}
     end;
 
-handle_info(login, #tcp{state = #state{devaddr = DevAddr, productid = ProductId, id = ChannelId}} = TCPState) ->
-    shuwa_bridge:send_log(ChannelId, "ChannelId ~p DevAddr ~p", [ChannelId, DevAddr]),
-    shuwa_mqtt:subscribe(<<"thing/", ProductId/binary, "/", DevAddr/binary>>),
-    erlang:send_after(1000, self(), temperature),
+handle_info(login, #tcp{state = #state{productid = ProductId, id = ChannelId}} = TCPState) ->
+    shuwa_bridge:send_log(ChannelId, "ChannelId ~p ProductId ~p", [ChannelId, ProductId]),
+%%    shuwa_mqtt:subscribe(<<"thing/", ProductId/binary, "/", DevAddr/binary>>),
+
     {noreply, TCPState#tcp{buff = <<>>, state = #state{id = ChannelId}}};
 
 
