@@ -97,9 +97,8 @@ get_Dict() ->
                     _ -> pass
                 end
                         end, [], Results1);
-        _ -> <<>>
-    end,
-    ok.
+        _ -> pass
+    end.
 
 get_Product() ->
     Names = case shuwa_parse:query_object(<<"Product">>, #{<<"skip">> => 0}) of
