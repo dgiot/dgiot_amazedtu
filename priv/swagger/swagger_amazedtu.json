@@ -1,11 +1,11 @@
 {
-  "tags": [
-    {
-      "name": "amaziot",
-      "description": "奇迹物联"
-    }
-  ],
   "definitions": {},
   "paths": {
-  }
+  },
+  "tags": [
+    {
+      "description": "奇迹物联",
+      "name": "amazeiot"
+    }
+  ]
 }

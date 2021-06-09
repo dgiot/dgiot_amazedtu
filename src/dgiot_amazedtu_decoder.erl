@@ -18,10 +18,9 @@
 -module(dgiot_amazedtu_decoder).
 -include("dgiot_amazedtu.hrl").
 -author("johnliu").
--protocol([?AMAZIOT]).
 
 %% API
--export([parse_frame/2, to_frame/1, test/0]).
+-export([parse_frame/2, to_frame/1]).
 
 
 parse_frame(Buff, Opts) ->
@@ -58,17 +57,3 @@ parse_frame([_ | Other], Acc, Opts) ->
 
 to_frame(_) ->
     {error, not_encode}.
-
-test() ->
-    lists:foreach(
-        fun(Bin) ->
-            {_, Frame} = parse_frame(Bin, no),
-            io:format("~p -> ~p~n", [Bin, Frame])
-        end, [
-            <<"SKZN,ÃûÅ·¶÷»ú05090502'ÃûÅ·µç±í12345678,55388987,q,null,yOK\r\n">>,
-            <<"OK\r\nSKZN,ÃûÅ·¶÷»ú01010BDB'ÃûÅ·µç±í19222222,31984488,l,12346,ON+60+6+60+0">>,
-            <<"SKZN,ÃûÅ·¶÷»ú07090502,07918088,f,null,null">>,
-            <<"SKZN,ÃûÅ·¶÷»ú050205DBÃûÅ·µç±í12345678,03224712,q,null,n">>,
-            <<"534B5A4E2CC3FBC5B7B6F7BBFA42424242424242422C33313938343438382C002C6E756C6C2C6E756C6C">>,
-            <<"SKZN,ÃûÅ·¶÷»úC2ACD22CÃûÅ·µç±í12345678,28007407,q,null,N">>
-        ]).

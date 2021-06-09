@@ -175,8 +175,8 @@ handle_info({tcp, Buff}, #tcp{state = #state{id = ChannelId, devaddr = DevAddr, 
             {noreply, TCPState}
     end;
 
-handle_info(login, #tcp{state = #state{productid = ProductId, id = ChannelId}} = TCPState) ->
-    shuwa_bridge:send_log(ChannelId, "ChannelId ~p ProductId ~p", [ChannelId, ProductId]),
+handle_info(login, #tcp{state = #state{id = ChannelId}} = TCPState) ->
+    shuwa_bridge:send_log(ChannelId, "ChannelId ~p", [ChannelId]),
 %%    shuwa_mqtt:subscribe(<<"thing/", ProductId/binary, "/", DevAddr/binary>>),
 
     {noreply, TCPState#tcp{buff = <<>>, state = #state{id = ChannelId}}};

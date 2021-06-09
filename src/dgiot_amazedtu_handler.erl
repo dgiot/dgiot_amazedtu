@@ -18,8 +18,8 @@
 -behavior(shuwa_rest).
 
 %% API
--export([swagger_amaziot/0]).
--export([handle/4, check_auth/3]).
+-export([swagger_amazedtu/0]).
+-export([handle/4]).
 
 %% API描述
 %% 支持二种方式导入
@@ -27,16 +27,11 @@
 %% 1. Metadata为map表示的JSON,
 %%    shuwa_http_server:bind(<<"/Amaz">>, ?MODULE, [], Metadata)
 %% 2. 从模块的priv/swagger/下导入
-%%    shuwa_http_server:bind(<<"/swagger_amaziot.json">>, ?MODULE, [], priv)
-swagger_amaziot() ->
+%%    shuwa_http_server:bind(<<"/swagger_amazedtu.json">>, ?MODULE, [], priv)
+swagger_amazedtu() ->
     [
-        shuwa_http_server:bind(<<"/swagger_amaziot.json">>, ?MODULE, [], priv)
+        shuwa_http_server:bind(<<"/swagger_amazedtu.json">>, ?MODULE, [], priv)
     ].
-
-
-check_auth(_OperationID, _Args, Req) ->
-%%    lager:info("do request: ~p, ~p~n", [OperationID, Req]),
-    {true, #{}, Req}.
 
 %%%===================================================================
 %%% 请求处理
