@@ -18,7 +18,7 @@
 -behavior(shuwa_rest).
 
 %% API
--export([swagger_amaziot/0]).
+-export([swagger_amazedtu/0]).
 -export([handle/4, check_auth/3]).
 
 %% API描述
@@ -28,9 +28,9 @@
 %%    shuwa_http_server:bind(<<"/Amaz">>, ?MODULE, [], Metadata)
 %% 2. 从模块的priv/swagger/下导入
 %%    shuwa_http_server:bind(<<"/swagger_amaziot.json">>, ?MODULE, [], priv)
-swagger_amaziot() ->
+swagger_amazedtu() ->
     [
-        shuwa_http_server:bind(<<"/swagger_amaziot.json">>, ?MODULE, [], priv)
+        shuwa_http_server:bind(<<"/swagger_amazedtu.json">>, ?MODULE, [], priv)
     ].
 
 
